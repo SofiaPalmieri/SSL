@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <ctype.h>
+#include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-typedef enum
-{
+typedef enum {
     cad,
     sep,
     esp,
@@ -11,3 +11,5 @@ typedef enum
 } token;
 
 token getToken(void);
+
+void imprimirCadena(token);
