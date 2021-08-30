@@ -4,91 +4,68 @@ typedef enum {
     e0_inicial,
     e1_cad,
     e2_sep,
-    e3_esp,
-    e4_fdt
+    e3_fdt
 } Estado;
 
-token getToken(void);
+void getToken(void);
 
-void imprimirCadena(token);
-
-token getToken()
+void getToken()
 {
     static int estadoActual = e0_inicial;
     char caracter;
-    while ((caracter = getchar()) != EOF)
+    caracter = getchar();
+    while (caracter != EOF)
     {
         switch (estadoActual)
         {
         case e0_inicial:
-            if (isalpha(caracter) || ispunct(caracter) || isdigit(caracter))
+            if ((caracter != ',') && (caracter != ' ') && (caracter != '\n'))
             {
+                printf("Cadena: ");
                 estadoActual = e1_cad;
             }
+            if ((caracter != ',') && (caracter != isspace(caracter)) && (caracter != '\n'))
+            {
+                caracter = getchar();
+            }
+
             if (caracter == ',')
             {
+                printf("Separador: ,\n");
+                caracter = getchar();
                 estadoActual = e2_sep;
             }
             if (isspace(caracter))
             {
-                estadoActual = e3_esp;
+                caracter = getchar();
             }
             if (caracter == '\n')
             {
-                estadoActual = e4_fdt;
+                printf("Fin de Texto: ");
+                estadoActual = e3_fdt;
                 caracter = EOF;
-                return fdt;
                 break;
             }
         case e1_cad:
-            if (isalpha(caracter) || ispunct(caracter) || isdigit(caracter))
+            if ((caracter != ',') && (caracter != isspace(caracter)) && (caracter != '\n'))
             {
-                estadoActual = e0_inicial;
                 ungetc(caracter, stdin);
-                return cad;
+                printf("%c", caracter);
+                caracter = getchar();
+                printf("\n");
+                estadoActual = e0_inicial;
                 break;
             }
         case e2_sep:
             if (caracter == ',')
             {
-                estadoActual = e0_inicial;
                 ungetc(caracter, stdin);
-                return sep;
+                printf("%c", caracter);
+                caracter = getchar();
+                printf("\n");
+                estadoActual = e0_inicial;
                 break;
             }
-        case e3_esp:
-            if (isspace(caracter))
-            {
-                estadoActual = e0_inicial;
-                ungetc(caracter, stdin);
-                return esp;
-                break;
-            }
-        default:
-            estadoActual = fdt;
-            break;
         }
     }
-    return fdt;
-}
-
-void imprimirCadena(token unToken)
-{
-    do
-    {
-        switch (unToken)
-        {
-        case cad:
-            printf("Cadena: %d", cad);
-            break;
-        case sep:
-            printf("Separador: %d", sep);
-            break;
-        case fdt:
-            printf("Fin de Texto: %d", fdt);
-            break;
-        default:
-            break;
-        }
-    } while (unToken != EOF);
 }

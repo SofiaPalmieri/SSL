@@ -2,7 +2,6 @@
 
 int main(void)
 {
-    token unToken = getToken();
-    imprimirCadena(unToken);
+    getToken();
     return 0;
 }

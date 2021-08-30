@@ -6,10 +6,7 @@
 typedef enum {
     cad,
     sep,
-    esp,
     fdt,
 } token;
 
-token getToken(void);
-
-void imprimirCadena(token);
+void getToken(void);
