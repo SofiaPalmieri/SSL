@@ -4,10 +4,9 @@
 #include <ctype.h>
 
 typedef enum {
-    e0_inicial,
-    e1_cad,
-    e2_sep,
-    e3_fdt
-} Estado;
+    cad,
+    sep,
+    fdt
+} Token;
 
-void getToken(void);
+Token getToken(char *buffer);
